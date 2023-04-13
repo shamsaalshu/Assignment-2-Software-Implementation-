@@ -1,0 +1,328 @@
+from datetime import datetime
+from enum import Enum
+
+class Gender(Enum):
+    MALE = "Male"
+    FEMALE = "Female"
+
+ 
+class DentalCompany:
+    def __init__(self,name):
+        self.__name = name  # Initialize the name of the company
+        self.branches = []  # Create an empty list to hold the branches
+
+    def getName(self):
+        return self.__name  # Return the name of the company
+
+    def add_branch(self, branch):
+        self.branches.append(branch)  # Add a branch to the list of branches
+
+    def get_branches(self):
+        return self.branches  # Return the list of branches
+
+
+class Branch:
+    def __init__(self, name, address, phoneNumber, manager):
+        self.__name = name  # Initialize the name of the branch
+        self.__address = address  # Initialize the address of the branch
+        self.__phoneNumber = phoneNumber  # Initialize the phone number of the branch
+        self.__manager = manager  # Initialize the manager of the branch
+        self.__services = []  # Create an empty list to hold the services offered
+        self.__patients = []  # Create an empty list to hold the patients registered
+        self.__staff = []  # Create an empty list to hold the staff members
+
+    def setName(self, name):
+        self.__name = name  # Set the name of the branch
+
+    def getName(self):
+        return self.__name  # Get the name of the branch
+
+    # Address
+    def setAddress(self, address):
+        self.__address = address  # Set the address of the branch
+
+    def getAddress(self):
+        return self.__address  # Get the address of the branch
+
+    # Phone number
+    def setPhoneNumber(self, phoneNumber):
+        self.__phoneNumber = phoneNumber  # Set the phone number of the branch
+
+    def getPhoneNumber(self):
+        return self.__phoneNumber  # Get the phone number of the branch
+
+    # Manager
+    def setManager(self, manager):
+        self.__manager = manager  # Set the manager of the branch
+
+    def getManager(self):
+        return self.__manager  # Get the manager of the branch
+
+    # Dental services
+    def addService(self, Service):
+        self.__services.append(Service)  # Add a service to the list of services offered
+
+    def getServices(self):
+        return self.__services  # Get the list of services offered
+
+    # Staff member
+    def addStaff(self, staff_member):
+        self.__staff.append(staff_member)  # Add a staff member to the list of staff members
+
+    def getStaff(self):
+        return self.__staff  # Get the list of staff members
+
+    # Patients
+    def addPatient(self, patient):
+        self.__patients.append(patient)  # Add a patient to the list of patients
+
+    def getPatients(self):
+        return self.__patients  # Get the list of patients
+
+# Define the Person class with first name, last name, gender and phone number attributes
+
+class Person:
+    def __init__(self, firstName, lastName, phoneNumber, gender, dateOfBirth):
+        self.__firstName = firstName  # Initialize the first name of the person
+        self.__lastName = lastName  # Initialize the last name of the person
+        self.__phoneNumber = phoneNumber  # Initialize the phone number of the person
+        self.__gender = gender  # Initialize the gender of the person
+        self.__dateOfBirth = dateOfBirth
+
+
+    def setFirstName(self, firstName):
+        self.__firstName = firstName  # Set the first name of the person
+
+    def getFirstName(self):
+        return self.__firstName  # Get the first name of the person
+
+
+    # Last name
+    def setLastName(self, lastName):
+        self.__lastName = lastName  # Set the last name of the person
+
+    def getLastName(self):
+        return self.__lastName  # Get the last name of the person
+
+    def setPhoneNumber(self, phoneNumber):
+        self.__phoneNumber = phoneNumber
+    def getPhoneNumber(self):
+        return self.__phoneNumber
+
+    def setGender(self, gender):
+        if isinstance(gender, Gender):
+            self.__gender = gender
+        else:
+            raise ValueError("Invalid gender value")
+
+    def getGender(self):
+        return self.__gender
+
+    def getDateOfBirth(self):
+      return self.__dateOfBirth
+
+    def getDateOfBirth(self,dateOfBirth):
+      self.__dateOfBirth=dateOfBirth
+    
+
+# Define the Staff class as a subclass of Person with an additional employee ID attribute
+class Staff(Person):
+    def __init__(self, firstName, lastName, phoneNumber, gender,dateOfBirth,employeeID):
+        # Call the constructor of the Person class to set the first name, last name, and phone number attributes
+        super().__init__(firstName, lastName, phoneNumber,gender,dateOfBirth)
+        # Set the employee ID attribute
+        self.__employeeID = employeeID
+   
+     # Define getters and setters for the employee ID attribute
+    def setEmployeeID(self, employee_id: str):
+        self.__employeeID = employee_id
+    def getEmployeeID(self):
+        return self.__employeeID
+
+
+    
+# Define the Manager, Receptionist, Hygienist, and Dentist classes as subclasses of Staff with no additional attributes
+class Manager(Staff):
+    pass
+
+class Receptionist(Staff):
+    pass
+
+class Hygienist(Staff):
+    pass
+
+class Dentist(Staff):
+    pass
+
+# Define the Patient class as a subclass of Person with an additional ID attribute and a list of appointments
+class Patient(Person):
+
+    def __init__(self, firstName, lastName, phoneNumber, gender, dateOfBirth, ID):
+        # Call the constructor of the Person class to set the first name, last name, and phone number attributes
+        super().__init__(firstName, lastName, phoneNumber, gender, dateOfBirth)
+        # Set the ID attribute and initialize the list of appointments
+        self.__ID = ID
+        self.__appointments = []
+        
+    # Define getters and setters for the ID attribute
+    def getID(self):
+        return self.__ID
+
+    def setID(self, ID):
+        self.__ID = ID
+    # Define getters for the appointments list
+    def getAppointments(self):
+        return self.__appointments
+    # Define a method to add an appointment to the list
+    def bookAppointment(self, appointment):
+        self.__appointments.append(appointment)
+    
+
+
+# Define the Appointment class with service and appointment time attributes
+class Appointment:
+    def __init__(self, services, appointment_time):
+        # Set the list of services and appointment time attributes
+        self.__services = services
+        self.__appointment_time = appointment_time
+
+     # Define a method to calculate the total cost of the services
+    def getTotalCost(self):
+        return sum(service.getCost() for service in self.__services)
+    # Define getters and setters for the services and appointment time attributes
+    def getServices(self):
+        return self.__services
+   
+    def getAppointmentTime(self):
+        return self.__appointment_time
+
+    def setAppointmentTime(self, appointment_time):
+        self.__appointment_time = appointment_time
+
+# Define the Service class with name and cost attributes
+class Service:
+    def __init__(self, serviceName, cost ):
+        # Set the name and cost attributes 
+        self.__serviceName = serviceName
+        self.__cost = cost
+      
+    # Define getters and setters for the name and cost attributes
+    def setServiceName(self, serviceName):
+        self.__serviceName = serviceName
+    def getServiceName(self):
+        return self.__serviceName
+    # Cost
+    def setCost(self, cost):
+        self.__cost = cost
+    def getCost(self):
+        return self.__cost
+
+
+# Define the Receipt class with patient, appointments, and dental company attributes
+
+class Receipt:
+    def __init__(self, patient, appointments,staff,DentalCompany):
+        # Set the patient, appointments, and dental company attributes
+        self.__patient = patient
+        self.__appointments = appointments
+        self.__staff=staff
+        # Calculate the total cost of the appointments using the getTotalCost method of the Appointment class
+        self.__totalCost = sum(appointment.getTotalCost() for appointment in appointments)
+        self.__DentalCompany=DentalCompany
+
+    # Define a method to print the receipt
+    def getReceipt(self):
+        print("Dental Company:", self.__DentalCompany.getName())
+        print("Patient info:")
+        print("Name:", self.__patient.getFirstName(), self.__patient.getLastName())
+        print("Gender:", self.__patient.getGender().name)
+        print("Phone Number:", self.__patient.getPhoneNumber())
+        print()
+
+        total_cost = 0
+         # Iterate through the appointments and print the appointment date and services
+        for appointment in self.__appointments:
+            appointment_date = appointment.getAppointmentTime().strftime("%Y-%m-%d")
+            print("Appointment Date:", appointment_date)
+            print("Services:")
+            # Iterate through the services and print the name and cost
+            for service in appointment.getServices():
+                service_cost = service.getCost()
+                total_cost += service_cost
+                print(f"{service.getServiceName()} ....................... {service_cost:.2f} AED" )
+                print("Staff Name:", self.__staff.getFirstName(), self.__staff.getLastName())
+
+
+              
+  
+
+
+        # Calculate the VAT and grand total
+        vat = total_cost * 0.05
+        grand_total = total_cost + vat
+
+        # Print the subtotal, VAT, and total cost
+        print("Subtotal : ",(total_cost),"AED")
+        print("VAT (5%): ", (vat),"AED")
+        print("Total cost: ",(grand_total),"AED") 
+
+from datetime import datetime
+
+def main():
+    # Create dental company
+    dental_company = DentalCompany('Emirates Dental Company')
+
+    # Create a manager
+    manager = Manager("Mohammed", "Al Shamsi", "555-1234", Gender.MALE, "1 April 1999", "M01")
+  
+    # Create a branch and add it to the dental company
+    branch1 = Branch("Dubai Main Branch", "123 Main St", "555-2345", manager)
+    dental_company.add_branch(branch1)
+
+    # Create services
+    service1 = Service("Cleaning", 100.50)
+    service2 = Service("Filling", 250.90)
+
+    # Add services to the branch (composition relationship)
+    branch1.addService(service1)
+    branch1.addService(service2)
+
+    # Create staff members (binary association relationship)
+    receptionist = Receptionist("Fatima", "Al Ali", "056294739", Gender.FEMALE, "20 May 1999", "R01")
+    hygienist = Hygienist("Ahmed", "Al Mansoori", "0504535603", Gender.MALE, "20 Aug 1999", "H01")
+    dentist = Dentist("Noor", "Al Khaja", "056826495073", Gender.FEMALE, "20 April 1999", "D01")
+
+    # Add staff members to the branch (composition relationship)
+    branch1.addStaff(receptionist)
+    branch1.addStaff(hygienist)
+    branch1.addStaff(dentist)
+
+    # Create patients
+    patient1 = Patient("Khalid", "Al Suwaidi", "055445829", Gender.MALE, "20 May 1999", "P01")
+    patient2 = Patient("Mariam", "Al Hashimi", "059299991", Gender.FEMALE, "3 May 1790", "P02")
+
+    # Add patients to the branch (composition relationship)
+    branch1.addPatient(patient1)
+    branch1.addPatient(patient2)
+
+    # Create appointments (association relationship)
+    appointment1 = Appointment([service1, service2], datetime(2023, 4, 15, 10, 0))
+    appointment2 = Appointment([service1], datetime(2023, 4, 15, 11, 0))
+
+    # Add appointments to patients
+    patient1.bookAppointment(appointment1)
+    patient2.bookAppointment(appointment2)
+
+    # Create a receipt
+
+    receipt = Receipt(patient1, [appointment1], hygienist, dental_company)
+    receipt2 = Receipt(patient2, [appointment2], dentist, dental_company)
+
+
+    # Print the receipt
+    receipt.getReceipt()
+    print("------------------")
+    receipt2.getReceipt()
+
+if __name__ == "__main__":
+    main()
